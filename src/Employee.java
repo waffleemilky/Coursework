@@ -1,6 +1,6 @@
 import java.util.Objects;
 public class Employee {
-    private static int count = 0;
+    private static int count = 1;
     private final String fullName;
     private int department;
     private double salary;
@@ -9,9 +9,8 @@ public class Employee {
     public Employee(int department, String fullName, double salary) {
         if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого департамента нет");
-        } else {
-            this.department = department;
         }
+        this.department = department;
         this.id = count++;
         this.fullName = fullName;
         this.salary = salary;
@@ -34,6 +33,9 @@ public class Employee {
     }
 
     public void setDepartment(int department) {
+        if (department < 1 || department > 5) {
+            throw new IllegalArgumentException("Такого департамента нет");
+        }
         this.department = department;
     }
 
@@ -61,99 +63,6 @@ public class Employee {
                 ", id: " + id;
     }
 
-    public static double calculateTotalSalary(Employee[] employees) {
-        double total = 0;
-        for (int i = 0; i < employees.length; i++) {
-            total += employees[i].getSalary();
-        }
-        return total;
-    }
-
-    public static String[] getAllEmployeesData(Employee[] employees) {
-        int count = 0;
-        for (Employee employee : employees) {
-            if (employee != null) {
-                count++;
-            }
-        }
-
-        String[] employeeDataArray = new String[count];
-
-        int index = 0;
-        for (Employee employee : employees) {
-            if (employee != null) {
-                employeeDataArray[index] = employee.toString();
-                index++;
-            }
-        }
-        return employeeDataArray;
-    }
-
-    public static Employee findMinSalary(Employee[] employees) {
-        if (employees == null || employees.length == 0) {
-            return null;
-        }
-
-        Employee minSalaryEmployee = null;
-        double minSalary = Double.MAX_VALUE;
-
-        for (Employee employee : employees) {
-            if (employee != null && employee.getSalary() < minSalary) {
-                minSalary = employee.getSalary();
-                minSalaryEmployee = employee;
-            }
-        }
-        return minSalaryEmployee;
-    }
-
-    public static Employee findMaxSalary(Employee[] employees) {
-        if (employees == null || employees.length == 0) {
-            return null;
-        }
-
-        Employee maxSalaryEmployee = null;
-        double maxSalary = Double.MIN_VALUE;
-
-        for (Employee employee : employees) {
-            if (employee != null && employee.getSalary() > maxSalary) {
-                maxSalary = employee.getSalary();
-                maxSalaryEmployee = employee;
-            }
-        }
-        return maxSalaryEmployee;
-        }
-
-    public static double calculateAverageSalary(Employee[] employees) {
-        if (employees == null || employees.length == 0) {
-            return 0;
-        }
-
-        double totalSalary = calculateTotalSalary(employees);
-        int employeeCount = 0;
-        for (Employee employee : employees) {
-            if (employee != null) {
-                employeeCount++;
-            }
-        }
-
-        if (employeeCount == 0) {
-            return 0;
-        }
-        return totalSalary / employeeCount;
-    }
-
-    public static void printAllEmployeeFullNames(Employee[] employees) {
-        System.out.println("ФИО всех сотрудников:");
-        if (employees != null && employees.length > 0) {
-            for (Employee employee : employees) {
-                if (employee != null) {
-                    System.out.println(employee.getFullName());
-                }
-            }
-        } else {
-            System.out.println("В массиве нет сотрудников.");
-        }
-    }
 
 }
 
